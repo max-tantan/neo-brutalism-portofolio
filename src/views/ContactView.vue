@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="border-4 border-black bg-brutal-orange p-8 mb-12 brutal-shadow transform -rotate-1">
+    <div class="contact-header border-4 border-black bg-brutal-orange p-8 mb-12 brutal-shadow transform -rotate-1 opacity-0">
       <h1 class="text-6xl md:text-8xl font-black text-black">
         SCREAM AT US
       </h1>
@@ -9,7 +9,7 @@
       </p>
     </div>
 
-    <form @submit.prevent="submitForm" class="bg-white border-4 border-black p-8 md:p-12 brutal-shadow space-y-8">
+    <form @submit.prevent="submitForm" class="contact-form bg-white border-4 border-black p-8 md:p-12 brutal-shadow space-y-8 opacity-0 translate-y-12">
       <!-- Name Input -->
       <div class="flex flex-col gap-2">
         <label for="name" class="text-2xl font-black uppercase">WHO ARE YOU?</label>
@@ -17,7 +17,7 @@
           id="name" 
           type="text" 
           placeholder="YOUR NAME HERE"
-          class="w-full border-4 border-black p-4 text-xl font-bold focus:outline-none focus:bg-brutal-green transition-colors brutal-shadow focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+          class="w-full border-4 border-black p-4 text-xl font-bold focus:outline-none focus:bg-brutal-green transition-colors brutal-shadow focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-none"
           required
         />
       </div>
@@ -29,7 +29,7 @@
           id="email" 
           type="email" 
           placeholder="YOUR@EMAIL.COM"
-          class="w-full border-4 border-black p-4 text-xl font-bold focus:outline-none focus:bg-brutal-blue transition-colors brutal-shadow focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+          class="w-full border-4 border-black p-4 text-xl font-bold focus:outline-none focus:bg-brutal-blue transition-colors brutal-shadow focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-none"
           required
         />
       </div>
@@ -41,7 +41,7 @@
           id="message" 
           rows="5"
           placeholder="I WANT A BORING CORPORATE WEBSITE..."
-          class="w-full border-4 border-black p-4 text-xl font-bold focus:outline-none focus:bg-brutal-magenta focus:text-white transition-colors brutal-shadow focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] resize-none"
+          class="w-full border-4 border-black p-4 text-xl font-bold focus:outline-none focus:bg-brutal-magenta focus:text-white transition-colors brutal-shadow focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] resize-none cursor-none"
           required
         ></textarea>
       </div>
@@ -49,7 +49,7 @@
       <!-- Submit Button -->
       <button 
         type="submit"
-        class="w-full border-4 border-black bg-brutal-yellow p-6 text-4xl font-black uppercase brutal-shadow hover:bg-brutal-green active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] active:translate-x-2 active:translate-y-2 transition-all mt-8"
+        class="w-full border-4 border-black bg-brutal-yellow p-6 text-4xl font-black uppercase brutal-shadow hover:bg-brutal-green active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] active:translate-x-2 active:translate-y-2 transition-all mt-8 cursor-none"
       >
         SEND IT
       </button>
@@ -58,6 +58,41 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import { useHead } from '@unhead/vue';
+import gsap from 'gsap';
+
+useHead({
+  title: 'CONTACT | NEO AGENCY',
+  meta: [
+    { name: 'description', content: 'Contact us. But don\'t expect a fast reply.' }
+  ]
+});
+
+onMounted(() => {
+  const tl = gsap.timeline();
+  
+  tl.to('.contact-header', {
+    opacity: 1,
+    rotation: -2,
+    scale: 1.05,
+    duration: 0.5,
+    ease: "power2.out"
+  })
+  .to('.contact-header', {
+    rotation: -1,
+    scale: 1,
+    duration: 0.3,
+    ease: "bounce.out"
+  })
+  .to('.contact-form', {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    ease: "back.out(1.5)"
+  }, "-=0.2");
+});
+
 const submitForm = () => {
   alert('FORM SUBMITTED. NOW WE WAIT.');
 };

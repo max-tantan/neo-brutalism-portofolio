@@ -1,7 +1,7 @@
 <template>
-  <div class="animate-fadeIn">
+  <div>
     <!-- Header -->
-    <header class="border-b-8 border-black pb-8 mb-12">
+    <header class="border-b-8 border-black pb-8 mb-12 project-header opacity-0 transform -translate-x-12">
       <div class="flex items-center gap-4 mb-4">
         <span class="bg-black text-brutal-green text-2xl font-black px-4 py-2 border-4 border-black brutal-shadow">PRJ-{{ projectId.toString().padStart(3, '0') }}</span>
         <span class="text-2xl font-bold bg-brutal-yellow px-2 border-2 border-black">2026</span>
@@ -15,7 +15,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
       
       <!-- Left Column: Info -->
-      <div class="lg:col-span-4 space-y-12">
+      <div class="lg:col-span-4 space-y-12 project-info opacity-0">
         <div class="bg-brutal-blue border-4 border-black p-6 brutal-shadow">
           <h3 class="text-3xl font-black mb-4 border-b-4 border-black pb-2">THE BRIEF</h3>
           <p class="text-xl font-bold leading-relaxed">
@@ -42,7 +42,7 @@
       </div>
 
       <!-- Right Column: Images -->
-      <div class="lg:col-span-8 space-y-12">
+      <div class="lg:col-span-8 space-y-12 project-images opacity-0 transform translate-x-12">
         <div class="border-4 border-black brutal-shadow bg-white p-4">
           <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&q=80&w=1200" alt="Project Hero" class="w-full h-auto border-4 border-black grayscale hover:grayscale-0 transition-all duration-500" />
         </div>
@@ -59,7 +59,7 @@
     </div>
     
     <!-- Next Project -->
-    <div class="mt-24 border-t-4 border-black pt-12 flex justify-between items-center">
+    <div class="mt-24 border-t-4 border-black pt-12 flex justify-between items-center opacity-0 project-footer">
       <router-link to="/" class="text-3xl font-black hover:bg-black hover:text-white px-4 py-2 border-4 border-transparent hover:border-black transition-colors">
         &larr; BACK
       </router-link>
@@ -71,19 +71,45 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useHead } from '@unhead/vue';
+import gsap from 'gsap';
 
 const route = useRoute();
 const projectId = computed(() => route.params.id || 1);
-</script>
 
-<style scoped>
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
+// Dynamic SEO tags based on project id
+useHead(() => ({
+  title: `PROJECT ${projectId.value} | NEO AGENCY`,
+  meta: [
+    { name: 'description', content: `View the brutal details of project ${projectId.value}.` }
+  ]
+}));
+
+onMounted(() => {
+  const tl = gsap.timeline();
+  
+  tl.to('.project-header', {
+    opacity: 1,
+    x: 0,
+    duration: 0.7,
+    ease: "power3.out"
+  })
+  .to('.project-info', {
+    opacity: 1,
+    duration: 0.5,
+    ease: "power2.out"
+  }, "-=0.3")
+  .to('.project-images', {
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    ease: "back.out(1.2)"
+  }, "-=0.5")
+  .to('.project-footer', {
+    opacity: 1,
+    duration: 0.5
+  }, "-=0.2");
+});
+</script>

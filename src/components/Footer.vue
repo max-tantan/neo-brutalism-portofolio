@@ -2,7 +2,7 @@
   <footer class="border-t-4 border-black bg-brutal-magenta text-white overflow-hidden mt-20">
     <div class="w-full border-b-4 border-black py-8 bg-black">
       <div class="whitespace-nowrap overflow-hidden">
-        <h2 class="text-6xl md:text-9xl font-black inline-block animate-marquee text-brutal-green tracking-tighter">
+        <h2 class="text-6xl md:text-9xl font-black inline-block animate-marquee motion-reduce:animate-none text-brutal-green tracking-tighter">
           LET'S BUILD SOMETHING BRUTAL. WE DON'T DO SOFT. WE DON'T DO SUBTLE. LET'S BUILD SOMETHING BRUTAL. WE DON'T DO SOFT. WE DON'T DO SUBTLE.
         </h2>
       </div>

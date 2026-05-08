@@ -5,7 +5,7 @@
       colorClass,
       sizeClass
     ]"
-    @click="$emit('click')"
+    @click="handleClick"
   >
     <slot>{{ text }}</slot>
   </button>
@@ -31,7 +31,37 @@ const props = defineProps({
   }
 });
 
-defineEmits(['click']);
+const emit = defineEmits(['click']);
+
+const playClickSound = () => {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(150, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.1);
+    
+    gain.gain.setValueAtTime(1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+  } catch (e) {
+    // Fail silently
+  }
+};
+
+const handleClick = (e) => {
+  playClickSound();
+  emit('click', e);
+};
 
 const colorClass = computed(() => {
   const map = {
