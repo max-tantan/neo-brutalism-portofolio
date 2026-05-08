@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tambahkan font-weight global agar kesan brutalist terasa */
+h1, h2, h3, button {
+  font-weight: 900;
+  text-transform: uppercase;
+}
