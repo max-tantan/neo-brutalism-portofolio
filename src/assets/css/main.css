@@ -1,9 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../../tailwind.config.js";
 
-/* Tambahkan font-weight global agar kesan brutalist terasa */
-h1, h2, h3, button {
-  font-weight: 900;
-  text-transform: uppercase;
+@layer base {
+  body {
+    @apply bg-brutal-bg text-black overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black uppercase tracking-tighter;
+  }
+}
+
+.brutal-shadow {
+  box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+  transition: all 0.15s ease-out;
+}
+
+.brutal-shadow:hover {
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+  transform: translate(4px, 4px);
+}
+
+.brutal-shadow:active {
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+  transform: translate(8px, 8px);
 }
